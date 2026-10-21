@@ -2,14 +2,26 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="Smoke">
-    <test name="groups">
+    <test name="ChromeTest">
+        <parameter name="browser" value="chrome" />
         <groups>
             <run>
                 <include name="smoke"/>
             </run>
         </groups>
         <packages>
-            <package name="org.example.tests.internalpages"></package>
+            <package name="com.example.tests" />
+        </packages>
+    </test>
+    <test name="FirefoxTest">
+        <parameter name="browser" value="firefox" />
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="com.example.tests" />
         </packages>
     </test>
 </suite>

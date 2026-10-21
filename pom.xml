@@ -16,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <selenide.version>7.19.0</selenide.version>
         <testng.version>7.11.0</testng.version>
-        <allure.maven.version>3.1.0</allure.maven.version>
+        <allure.maven.version>3.0.0</allure.maven.version>
         <allure.testng.version>3.0.0</allure.testng.version>
         <aspectj.version>1.9.21</aspectj.version>
         <lombok.version>1.18.48</lombok.version>
@@ -46,6 +46,9 @@
                 <version>3.13.0</version>
                 <configuration>
                     <release>${java.version}</release>
+                    <compilerArgs>
+                        <arg>-proc:full</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
 
@@ -69,7 +72,7 @@
                     </suiteXmlFiles>
                     <!-- Запускается специальный java-agent aspectjweaver. Также нужно для Allure. -->
                     <argLine>
-                        -javaagent:"${org.aspectj:aspectjweaver:jar}"
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
                     <!-- Указываем место для хранения данных от Allure -->
                     <systemPropertyVariables>
@@ -83,6 +86,9 @@
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
                 <version>${allure.maven.version}</version>
+                <configuration>
+                    <reportVersion>2.29.0</reportVersion>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -101,6 +107,7 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- Allure-TestNG -->
