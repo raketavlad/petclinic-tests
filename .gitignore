@@ -40,3 +40,5 @@ build/
 
 ### My ###
 /.idea
+/target
+/.allure
