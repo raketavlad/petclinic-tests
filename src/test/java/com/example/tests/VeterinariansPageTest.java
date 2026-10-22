@@ -62,7 +62,7 @@ public class VeterinariansPageTest extends BaseTest {
         String secondQuery = """
                 select s.name from vet_specialties vs
                 left join specialties s on s.id = vs.specialty_id
-                where vs.vet_id = ?::integer""";
+                where vs.vet_id = ?""";
         for (Veterinarian vet : veterinarians) {
             List<String> list = vet.getSpecialities();
             sqlHelper.execute(secondQuery, ps -> {
