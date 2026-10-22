@@ -3,13 +3,15 @@
   <p><strong>Фреймворк для выполнения автотестов веб-приложения Spring PetClinic Sample Application</strong></p>
 
   <p>
-    <a href="#quick-start">Быстрый старт</a> ·
-    <a href="#features">Возможности</a> ·
-    <a href="#contributing">Участие</a>
+    <a href="#about">О проекте</a> ·
+    <a href="#installation">Установка</a> ·
+    <a href="#usage">Использование</a>
   </p>
-</div>
+</div>  
+
 ---
 
+<a id="about"></a>
 ## О проекте
 
 Данный фреймоворк предназначен для тестирования веб-приложения **Spring PetClinic Sample Application**.
@@ -17,6 +19,7 @@
 проект [Spring PetClinic Sample Application](https://github.com/spring-projects/spring-petclinic).
 У себя, данный проект, развернул с помощью **Docker Compose**.
 
+<a id="installation"></a>
 ## Установка
 
 ### Разворачивание проекта
@@ -35,6 +38,7 @@
 
 `cd petclinic-tests`
 
+<a id="usage"></a>
 ## Использование
 
 ### Запуск тестового прогона
