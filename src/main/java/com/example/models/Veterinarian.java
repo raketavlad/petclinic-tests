@@ -20,6 +20,10 @@ public class Veterinarian {
     @Builder.Default
     private List<String> specialities = new ArrayList<>();
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     public String getFormattedSpecialities() {
         Collections.sort(specialities);
         return specialities.isEmpty() ? "none" : String.join(" ", specialities);

@@ -15,7 +15,7 @@ public class BaseTest {
     @Parameters("browser")
     public void setUp(@Optional("chrome") String browser) {
         Configuration.browser = browser;
-        Configuration.headless = true;
+//        Configuration.headless = true;
         Configuration.baseUrl = ConfigProvider.require("base.url");
 
         sqlHelper = new SqlHelper(ConfigProvider.get("db.url"),
