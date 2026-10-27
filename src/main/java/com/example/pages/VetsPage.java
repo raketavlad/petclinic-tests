@@ -1,8 +1,9 @@
 package com.example.pages;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
+import static com.codeborne.selenide.Condition.clickable;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -20,7 +21,7 @@ public class VetsPage extends BasePage {
 
 
     public String getHeadlineText() {
-        return headline.shouldBe(Condition.visible).getText();
+        return headline.shouldBe(visible).getText();
     }
 
     public int getRowsCount() {
@@ -48,27 +49,27 @@ public class VetsPage extends BasePage {
     }
 
     public VetsPage goToNextPage() {
-        nextPageButton.click();
+        nextPageButton.shouldBe(clickable).click();
         return this;
     }
 
     public VetsPage goToPreviousPage() {
-        previousPageButton.click();
+        previousPageButton.shouldBe(clickable).click();
         return this;
     }
 
     public VetsPage goToLastPage() {
-        lastPageButton.click();
+        lastPageButton.shouldBe(clickable).click();
         return this;
     }
 
     public VetsPage goToFirstPage() {
-        firstPageButton.click();
+        firstPageButton.shouldBe(clickable).click();
         return this;
     }
 
     public VetsPage goToPage(int pageNumber) {
-        $x(String.format("//a[text()='%d']", pageNumber)).click();
+        $x(String.format("//a[text()='%d']", pageNumber)).shouldBe(clickable).click();
         return this;
     }
 
@@ -77,9 +78,6 @@ public class VetsPage extends BasePage {
     }
 
     public int getLastPageNumber() {
-        return Integer.parseInt(lastPageNumber.getText());
+        return Integer.parseInt(lastPageNumber.shouldBe(visible).getText());
     }
-
-
-
 }
