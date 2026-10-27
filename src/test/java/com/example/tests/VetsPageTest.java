@@ -24,8 +24,7 @@ public class VetsPageTest extends BaseTest {
         VetsPage page = new VetsPage();
         open("/vets.html");
 
-        int countPages = (getVetsCount() + PAGE_SIZE - 1) / PAGE_SIZE;
-        Assert.assertEquals(page.getLastPageNumber(), countPages);
+        Assert.assertEquals(page.getLastPageNumber(), getPagesCount());
     }
 
     @Test(description = "Проверка первой страницы")
@@ -43,6 +42,9 @@ public class VetsPageTest extends BaseTest {
         Assert.assertEquals(page.getTableHeadingText(1), "Specialties");
 
         List<Veterinarian> vets = getVets(pageNumber);
+
+        Assert.assertEquals(page.getColumnsCount(), 2);
+        Assert.assertEquals(page.getRowsCount(), vets.size() + 1);
 
         int i = 1;
         for (Veterinarian vet : vets) {
@@ -73,16 +75,54 @@ public class VetsPageTest extends BaseTest {
         Assert.assertEquals(page.getTableHeadingText(1), "Specialties");
 
         List<Veterinarian> vets = getVets(pageNumber);
+
+        Assert.assertEquals(page.getColumnsCount(), 2);
+        Assert.assertEquals(page.getRowsCount(), vets.size() + 1);
+
         int i = 1;
         for (Veterinarian vet : vets) {
             Assert.assertEquals(page.getTableCellText(0, i), vet.getFullName());
             Assert.assertEquals(page.getTableCellText(1, i), vet.getFormattedSpecialities());
             i++;
         }
-
         Assert.assertTrue(page.hasPreviousPage());
         Assert.assertFalse(page.hasNextPage());
     }
+
+    @Test(description = "Проверка остальных страниц (не первой и не последней)")
+    public void checkOtherPages() {
+        VetsPage page = new VetsPage();
+        open("/vets.html");
+
+        int pageNumber = 2; // Нужно прокидывать какую-то страницу, наверное через дата провайдер
+
+        if (getPagesCount() > 2) {
+            page.goToPage(pageNumber);
+
+            Assert.assertEquals(page.getHeadlineText(), HEADLINE);
+
+            Assert.assertEquals(page.getTableHeadingText(0), "Name");
+            Assert.assertEquals(page.getTableHeadingText(1), "Specialties");
+
+            List<Veterinarian> vets = getVets(pageNumber);
+
+            Assert.assertEquals(page.getColumnsCount(), 2);
+            Assert.assertEquals(page.getRowsCount(), vets.size() + 1);
+
+            int i = 1;
+            for (Veterinarian vet : vets) {
+                Assert.assertEquals(page.getTableCellText(0, i), vet.getFullName());
+                Assert.assertEquals(page.getTableCellText(1, i), vet.getFormattedSpecialities());
+                i++;
+            }
+
+            Assert.assertTrue(page.hasPreviousPage());
+            Assert.assertTrue(page.hasNextPage());
+        } else {
+            System.out.println("Количество страниц меньше трёх, проверка не нужна!");
+        }
+    }
+
 
     @Test(description = "Метод для проверок")
     public void myTest() {
@@ -157,5 +197,9 @@ public class VetsPageTest extends BaseTest {
         } else {
             return Integer.parseInt(value);
         }
+    }
+
+    private int getPagesCount() {
+        return (getVetsCount() + PAGE_SIZE - 1) / PAGE_SIZE;
     }
 }
