@@ -1,6 +1,10 @@
 package com.example.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Condition.clickable;
 import static com.codeborne.selenide.Condition.visible;
@@ -16,16 +20,19 @@ public class VetsPage extends BasePage {
     private final SelenideElement previousPageButton = $("[title='Previous']");
     private final SelenideElement nextPageButton = $("[title='Next']");
     private final SelenideElement lastPageButton = $("[title='Last']");
+    private final SelenideElement currentPageNumber = $("div span span");
     private final SelenideElement lastPageNumber = $x("//div/span[contains(text(), ']')]/preceding-sibling::span[1]");
-
-
 
     public String getHeadlineText() {
         return headline.shouldBe(visible).getText();
     }
 
-    public int getRowsCount() {
+    public int getAllRowsCount() {
         return table.$$("tr").size();
+    }
+
+    public int getDataRowsCount() {
+        return table.$$("tbody tr").size();
     }
 
     public int getColumnsCount() {
@@ -36,7 +43,7 @@ public class VetsPage extends BasePage {
         return table.$$("tr").get(0).$$("th").get(columnIndex).getText();
     }
 
-    public String getTableCellText(int columnIndex, int rowIndex) {
+    public String getTableCellText(int rowIndex, int columnIndex) {
         return table.$$("tr").get(rowIndex).$$("td").get(columnIndex).getText();
     }
 
@@ -69,12 +76,24 @@ public class VetsPage extends BasePage {
     }
 
     public VetsPage goToPage(int pageNumber) {
-        $x(String.format("//a[text()='%d']", pageNumber)).shouldBe(clickable).click();
+        $x(String.format("//div/span/a[text()='%d']", pageNumber)).shouldBe(clickable).click();
         return this;
     }
 
     public int getCurrentPageNumber() {
-        return 0;
+        return Integer.parseInt(currentPageNumber.shouldBe(visible).getText());
+    }
+
+    public int getCurrentPageNumberFromUrl() {
+        String currentUrl = WebDriverRunner.url();
+        Pattern pattern = Pattern.compile("[?&]page=([^&#]*)");
+        Matcher matcher = pattern.matcher(currentUrl);
+        String value = matcher.find() ? matcher.group(1) : null;
+        if (value == null) {
+            return 1;
+        } else {
+            return Integer.parseInt(value);
+        }
     }
 
     public int getLastPageNumber() {

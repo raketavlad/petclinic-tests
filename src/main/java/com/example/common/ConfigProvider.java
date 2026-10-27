@@ -58,6 +58,11 @@ public final class ConfigProvider {
     }
 
     public static int getInt(String key, int def) {
-        return Integer.parseInt(get(key, String.valueOf(def)));
+        String v = get(key, String.valueOf(def));
+        try {
+            return Integer.parseInt(v.trim());
+        } catch (NumberFormatException e) {
+            throw new ConfigException("Некорректное значение '" + key + "' = '" + v + "'", e);
+        }
     }
 }

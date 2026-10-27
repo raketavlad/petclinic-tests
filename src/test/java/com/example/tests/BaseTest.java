@@ -1,8 +1,11 @@
 package com.example.tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.example.common.ConfigProvider;
 import com.example.common.SqlHelper;
+import com.example.common.VetRepository;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -10,6 +13,7 @@ import org.testng.annotations.Parameters;
 public class BaseTest {
 
     protected SqlHelper sqlHelper;
+    protected VetRepository vetRepository;
 
     @BeforeClass(alwaysRun = true)
     @Parameters("browser")
@@ -21,5 +25,11 @@ public class BaseTest {
         sqlHelper = new SqlHelper(ConfigProvider.get("db.url"),
                 ConfigProvider.get("db.user"),
                 ConfigProvider.get("db.password"));
+        vetRepository = new VetRepository(sqlHelper);
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void tearDown() {
+        Selenide.closeWebDriver();
     }
 }
