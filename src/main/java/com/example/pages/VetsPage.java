@@ -16,6 +16,7 @@ public class VetsPage extends BasePage {
     private final SelenideElement headline = $("h2");
     private final SelenideElement table = $("#vets");
 
+    private final String pageButton = "//div/span/a[text()='%d']";
     private final SelenideElement firstPageButton = $("[title='First']");
     private final SelenideElement previousPageButton = $("[title='Previous']");
     private final SelenideElement nextPageButton = $("[title='Next']");
@@ -25,10 +26,6 @@ public class VetsPage extends BasePage {
 
     public String getHeadlineText() {
         return headline.shouldBe(visible).getText();
-    }
-
-    public int getAllRowsCount() {
-        return table.$$("tr").size();
     }
 
     public int getDataRowsCount() {
@@ -76,7 +73,7 @@ public class VetsPage extends BasePage {
     }
 
     public VetsPage goToPage(int pageNumber) {
-        $x(String.format("//div/span/a[text()='%d']", pageNumber)).shouldBe(clickable).click();
+        $x(String.format(pageButton, pageNumber)).shouldBe(clickable).click();
         return this;
     }
 
@@ -98,5 +95,50 @@ public class VetsPage extends BasePage {
 
     public int getLastPageNumber() {
         return Integer.parseInt(lastPageNumber.shouldBe(visible).getText());
+    }
+
+    public String getPageButtonColor(int pageNumber) {
+        return getHexColor($x(String.format(pageButton, pageNumber)), "color");
+    }
+
+    public String getNextPageButtonColor() {
+        return getHexColor(nextPageButton, "color");
+    }
+
+    public String getPreviousPageButtonColor() {
+        return getHexColor(previousPageButton, "color");
+    }
+
+    public String getFirstPageButtonColor() {
+        return getHexColor(firstPageButton, "color");
+    }
+
+    public String getLastPageButtonColor() {
+        return getHexColor(lastPageButton, "color");
+    }
+
+    public VetsPage hoverToPageNumberButton(int pageNumber) {
+        $x(String.format(pageButton, pageNumber)).shouldBe(visible).hover();
+        return this;
+    }
+
+    public VetsPage hoverToNextPageButton() {
+        nextPageButton.shouldBe(visible).hover();
+        return this;
+    }
+
+    public VetsPage hoverToPreviousPageButton() {
+        previousPageButton.shouldBe(visible).hover();
+        return this;
+    }
+
+    public VetsPage hoverToFirstPageButton() {
+        firstPageButton.shouldBe(visible).hover();
+        return this;
+    }
+
+    public VetsPage hoverToLastPageButton() {
+        lastPageButton.shouldBe(visible).hover();
+        return this;
     }
 }
