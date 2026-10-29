@@ -2,6 +2,7 @@ package com.example.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import com.example.common.ConfigProvider;
 import com.example.common.SqlHelper;
 import com.example.common.VetRepository;
@@ -35,5 +36,13 @@ public class BaseTest {
 
     protected String getBaseUrl() {
         return Configuration.baseUrl;
+    }
+
+    protected String getCurrentUrl() {
+        String url = WebDriverRunner.url();
+        if (url.endsWith("/")) {
+            return url.substring(0, url.length() - 1);
+        }
+        return url;
     }
 }

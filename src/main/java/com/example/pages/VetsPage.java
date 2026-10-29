@@ -13,6 +13,8 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class VetsPage extends BasePage {
 
+    private static final String PATH = "/vets.html";
+
     private final SelenideElement headline = $("h2");
     private final SelenideElement table = $("#vets");
 
@@ -23,6 +25,10 @@ public class VetsPage extends BasePage {
     private final SelenideElement lastPageButton = $("[title='Last']");
     private final SelenideElement currentPageNumber = $("div span span");
     private final SelenideElement lastPageNumber = $x("//div/span[contains(text(), ']')]/preceding-sibling::span[1]");
+
+    public String getPath() {
+        return PATH;
+    }
 
     public String getHeadlineText() {
         return headline.shouldBe(visible).getText();
