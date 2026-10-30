@@ -3,8 +3,8 @@ package com.example.models;
 import lombok.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -25,7 +25,8 @@ public class Veterinarian {
     }
 
     public String getFormattedSpecialities() {
-        Collections.sort(specialities);
-        return specialities.isEmpty() ? "none" : String.join(" ", specialities);
+        return specialities.isEmpty()
+                ? "none"
+                : specialities.stream().sorted().collect(Collectors.joining(" "));
     }
 }

@@ -48,6 +48,10 @@ public class VetsPageTest extends BaseTest {
         VetsPage page = new VetsPage();
         open("/vets.html");
 
+        if (vetRepository.getPagesCount() <= 1) {
+            throw new SkipException("Одна страница — проверять нечего");
+        }
+
         page.goToLastPage();
         Assert.assertEquals(page.getCurrentPageNumberFromUrl(), vetRepository.getPagesCount());
 
@@ -98,7 +102,7 @@ public class VetsPageTest extends BaseTest {
         open("/vets.html");
 
         if (!page.hasNextPage()) {
-            throw new SkipException("Для текущей страницы (" + page.getCurrentPageNumber() + ") отсутствует слудующая");
+            throw new SkipException("Для текущей страницы (" + page.getCurrentPageNumber() + ") отсутствует следующая");
         }
         int expectedPageNumber = page.getCurrentPageNumber() + 1;
         page.goToNextPage();
@@ -111,9 +115,13 @@ public class VetsPageTest extends BaseTest {
         VetsPage page = new VetsPage();
         open("/vets.html");
 
+        if (vetRepository.getPagesCount() <= 1) {
+            throw new SkipException("Одна страница — проверять нечего");
+        }
+
         page.goToLastPage();
         if (!page.hasPreviousPage()) {
-            throw new SkipException("Для текущей страницы (" + page.getCurrentPageNumber() + ") отсутствует слудующая");
+            throw new SkipException("Для текущей страницы (" + page.getCurrentPageNumber() + ") отсутствует следующая");
         }
         int expectedPageNumber = page.getCurrentPageNumber() - 1;
         page.goToPreviousPage();
@@ -125,6 +133,10 @@ public class VetsPageTest extends BaseTest {
     public void checkTransitionToFirstPage() {
         VetsPage page = new VetsPage();
         open("/vets.html");
+
+        if (vetRepository.getPagesCount() <= 1) {
+            throw new SkipException("Одна страница — проверять нечего");
+        }
 
         page.goToLastPage();
         page.goToFirstPage();

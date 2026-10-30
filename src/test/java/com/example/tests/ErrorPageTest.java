@@ -1,9 +1,10 @@
 package com.example.tests;
 
-import com.codeborne.selenide.Selenide;
 import com.example.pages.ErrorPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static com.codeborne.selenide.Selenide.open;
 
 public class ErrorPageTest extends BaseTest {
 
@@ -15,7 +16,7 @@ public class ErrorPageTest extends BaseTest {
             groups = "regress")
     public void checkHeadline() {
         ErrorPage page = new ErrorPage();
-        Selenide.open(page.getPath());
+        open(page.getPath());
 
         Assert.assertEquals(page.getHeadline(), HEADLINE);
     }
@@ -24,7 +25,7 @@ public class ErrorPageTest extends BaseTest {
             groups = "regress")
     public void checkText() {
         ErrorPage page = new ErrorPage();
-        Selenide.open(page.getPath());
+        open(page.getPath());
 
         Assert.assertEquals(page.getText(), TEXT);
     }
@@ -33,7 +34,7 @@ public class ErrorPageTest extends BaseTest {
             groups = "regress")
     public void checkImage() {
         ErrorPage page = new ErrorPage();
-        Selenide.open(page.getPath());
+        open(page.getPath());
 
         Assert.assertEquals(page.getImageUrl(), getBaseUrl() + IMAGE_URL);
     }

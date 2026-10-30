@@ -1,9 +1,10 @@
 package com.example.tests;
 
-import com.codeborne.selenide.Selenide;
 import com.example.pages.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static com.codeborne.selenide.Selenide.open;
 
 public class HomePageTest extends BaseTest {
 
@@ -14,7 +15,7 @@ public class HomePageTest extends BaseTest {
             groups = "regress")
     public void checkHeadline() {
         HomePage page = new HomePage();
-        Selenide.open(page.getPath());
+        open(page.getPath());
 
         Assert.assertEquals(page.getHeadline(), HEADLINE);
     }
@@ -23,7 +24,7 @@ public class HomePageTest extends BaseTest {
             groups = "regress")
     public void checkImage() {
         HomePage page = new HomePage();
-        Selenide.open(page.getPath());
+        open(page.getPath());
 
         Assert.assertEquals(page.getImageUrl(), getBaseUrl() + IMAGE_URL);
     }
